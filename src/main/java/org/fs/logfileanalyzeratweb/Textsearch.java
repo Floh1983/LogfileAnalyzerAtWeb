@@ -14,8 +14,10 @@ public class Textsearch {
     public void textsearch() throws IOException {
 
         Path path = Paths.get("C:\\Users\\u1166832\\Documents\\Praktikum\\IHK\\Projekt\\Test.txt");
-        BufferedReader reader = Files.newBufferedReader(path);
-        String line = reader.readLine();
+        String line;
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
+            line = reader.readLine();
+        }
         System.out.println(line);
     }
 }
