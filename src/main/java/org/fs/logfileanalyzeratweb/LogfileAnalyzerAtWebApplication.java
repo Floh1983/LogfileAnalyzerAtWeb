@@ -16,7 +16,7 @@ public class LogfileAnalyzerAtWebApplication {
 		SpringApplication.run(LogfileAnalyzerAtWebApplication.class, args);
 		Textsearch mytext = new Textsearch();
 		mytext.textsearch("C:\\Users\\u1166832\\Documents\\Praktikum\\IHK\\Projekt\\Test.txt",
-				"ante",
+				"an$%&/(te=",
 				"C:\\Users\\u1166832\\Documents\\Praktikum\\IHK\\Projekt\\TestAusgabe.txt");
 	}
 }
