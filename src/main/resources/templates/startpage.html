@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Textsearch</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h2>Volltextsuche staren.</h2>
+    <hr/>
+    <form th:action="@{/saveCustomer}" th:object="${customer}" methode="POST">
+        <input type="text" th:field="*{name}" placeholder="Namen angeben" class="form-control col-4 mb-4" />
+        <input type="text" th:field="*{email}" placeholder="Email angeben" class="form-control col-4 mb-4" />
+        <input type="text" th:field="*{rent}" placeholder="Was wird ausgeliehen?" class="form-control col-4 mb-4" />
+        <button class="btn btn-primary" type="submit">Speichern</button>
+        <input type="hidden" th:field="*{id}" />
+    </form>
+    <hr/>
+    <a th:href="@{/showCustomers}">Zur&uuml;ck zur Kundenliste</a>
+</div>
+
+</body>
+</html>
