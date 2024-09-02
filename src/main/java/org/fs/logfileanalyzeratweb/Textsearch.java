@@ -12,12 +12,14 @@ import java.nio.file.Paths;
 public class Textsearch {
 
     public void textsearch() throws IOException {
-
+        //Übergabe des Dateipfades
         Path path = Paths.get("C:\\Users\\u1166832\\Documents\\Praktikum\\IHK\\Projekt\\Test.txt");
+        //Auslesen Der Textdatei
         String line;
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             line = reader.readLine();
         }
+        //Ausgabe der ersten Zeile
         System.out.println(line);
     }
 }
