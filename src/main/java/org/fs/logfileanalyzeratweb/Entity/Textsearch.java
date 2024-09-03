@@ -1,18 +1,26 @@
 package org.fs.logfileanalyzeratweb.Entity;
 
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+
 @Component
+@AllArgsConstructor
+
+@Getter
+@Setter
 public class Textsearch {
 
     public void textsearch(String inputFile, @NotNull String searchText, String outputFile) throws IOException {

@@ -1,9 +1,17 @@
 package org.fs.logfileanalyzeratweb.Controller;
 
 import org.fs.logfileanalyzeratweb.Entity.Textsearch;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class FController {
@@ -13,13 +21,25 @@ public class FController {
         return mav;
     }
 
-    @GetMapping("/showText")
-    public ModelAndView showText(){
-        ModelAndView mav = new ModelAndView("text");
+//    @GetMapping("/showText")
+//    public ModelAndView showText(){
+//        ModelAndView mav = new ModelAndView("text");
 //        Textsearch mytext = new Textsearch();
 //        mav.addObject("textsearch", mytext);
-        return mav;
+//        return mav;
+//    }
+
+    @PostMapping("/search")
+    public void searchFile(@RequestParam("filePath") String inputFile,
+                             @RequestParam("searchText") String searchText,
+                             @RequestParam("output.txt") String outputFile
+                             ) {
+
+
+//        Textsearch textsearch = new Textsearch(inputFile, searchText, outputFile);
+//        return;
     }
+
 
 //    @GetMapping("/addCustomerForm")
 //    public ModelAndView addCustomerForm(){
