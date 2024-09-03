@@ -14,7 +14,7 @@ public class FController {
     }
 
     @GetMapping("/showText")
-    public ModelAndView showTextsearch(){
+    public ModelAndView showText(){
         ModelAndView mav = new ModelAndView("text");
 //        Textsearch mytext = new Textsearch();
 //        mav.addObject("textsearch", mytext);
