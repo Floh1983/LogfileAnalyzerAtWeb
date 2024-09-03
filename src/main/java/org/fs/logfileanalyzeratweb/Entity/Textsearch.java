@@ -1,4 +1,4 @@
-package org.fs.logfileanalyzeratweb;
+package org.fs.logfileanalyzeratweb.Entity;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
