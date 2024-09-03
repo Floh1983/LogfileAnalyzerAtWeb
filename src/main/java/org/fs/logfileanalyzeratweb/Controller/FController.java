@@ -7,15 +7,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class FController {
-
-//    @Autowired
-//    private mytext fRepo;
+    @GetMapping("/startpage")
+    public ModelAndView showStartpage(){
+        ModelAndView mav = new ModelAndView("startpage");
+        return mav;
+    }
 
     @GetMapping("/showText")
     public ModelAndView showTextsearch(){
         ModelAndView mav = new ModelAndView("text");
-        Textsearch mytext = new Textsearch();
-        mav.addObject("textsearch", mytext);
+//        Textsearch mytext = new Textsearch();
+//        mav.addObject("textsearch", mytext);
         return mav;
     }
 
