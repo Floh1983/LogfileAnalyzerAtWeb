@@ -1,11 +1,19 @@
 package org.fs.logfileanalyzeratweb.Controller;
 
+import ch.qos.logback.core.model.Model;
 import org.fs.logfileanalyzeratweb.Entity.Textsearch;
+import org.fs.logfileanalyzeratweb.Provider.InputFileProvider;
+import org.fs.logfileanalyzeratweb.Provider.OutputFolderProvider;
+import org.fs.logfileanalyzeratweb.Provider.SearchTextProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 @Controller
+
 public class FController {
     @GetMapping("/startpage")
     public ModelAndView showStartpage(){
@@ -13,13 +21,57 @@ public class FController {
         return mav;
     }
 
-    @GetMapping("/showText")
+    @GetMapping("/inputFileSelection")
+    public ModelAndView inputFileSelection(){
+        ModelAndView mav = new ModelAndView("inputFileSelection");
+        return mav;
+    }
+
+    @PostMapping("/submitInputPath")
+    public String submitInputPath(){
+        return "redirect:/outputFolderSelection";
+    }
+
+    @GetMapping("/outputFolderSelection")
+    public ModelAndView outputFileSelection(){
+        ModelAndView mav = new ModelAndView("outputFolderSelection");
+        return mav;
+    }
+
+    @PostMapping("/submitOutputPath")
+    public String submitOutputPath(){
+        return "redirect:/searchOption";
+    }
+
+    @GetMapping("/searchOption")
     public ModelAndView showText(){
-        ModelAndView mav = new ModelAndView("text");
+        ModelAndView mav = new ModelAndView("searchOption");
 //        Textsearch mytext = new Textsearch();
 //        mav.addObject("textsearch", mytext);
         return mav;
     }
+
+//   @GetMapping("/textSearch")
+//   public ModelAndView textSearch(){
+//       ModelAndView mav = new ModelAndView("textSearch");
+//       return mav;
+//   }
+
+
+    @PostMapping("/textSearch")
+    public String performSearch(Model model) throws IOException {
+        // Werte von den verschiedenen Klassen abrufen
+        InputFileProvider inputFileProvider = new InputFileProvider("inputFile");
+        SearchTextProvider searchTextProvider = new SearchTextProvider("dummy");
+        OutputFolderProvider outputFolderProvider = new OutputFolderProvider("output.txt");
+
+        // Textsearch aufrufen
+        Textsearch textsearch = new Textsearch();
+        textsearch.textsearch(inputFileProvider.getInputFile(), searchTextProvider.getSearchText(), outputFolderProvider.outputFolder());
+        return "Status";
+    }
+
+
 
 //    @GetMapping("/addCustomerForm")
 //    public ModelAndView addCustomerForm(){

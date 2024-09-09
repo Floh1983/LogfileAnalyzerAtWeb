@@ -1,11 +1,11 @@
 package org.fs.logfileanalyzeratweb.Entity;
 
+import org.fs.logfileanalyzeratweb.Controller.FController;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
