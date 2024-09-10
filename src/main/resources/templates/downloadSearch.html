@@ -22,14 +22,9 @@
 <div class='container'>
     <h2>Bitte wählen Sie aus wo die Datei gespeichert werden soll.</h2>
     <hr/>
-    <form method="POST" action="/submitOutputPath">
-        <div class="form-group">
-            <label for="folder">Bitte wählen Sie:</label>
-            <input type="file" class="form-control" id="file" onchange="getFilePath()" required>
-            <input type="hidden" id="outputFolderPath" name="outputFolderPath">
-        </div>
-        <button type="submit" class="btn btn-primary">Fortfahren</button>
-    </form>
+    <a th:href="/search/file/${filename}" download>
+        <button type="" class="btn btn-primary">Download</button>
+    </a>
 </div>
 </body>
 </html>

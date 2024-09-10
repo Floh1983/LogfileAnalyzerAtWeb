@@ -21,15 +21,13 @@
         <h2>Bitte wählen sie eine Datei aus.</h2>
         <hr/>
         <form method="POST" action="/submitInputPath">
-            <div class="form-group">
+                <div class="form-group">
                 <label for="file">Wählen Sie eine Datei:</label>
                 <input type="file" class="form-control" id="file" onchange="getFilePath()" required>
                 <input type="hidden" id="inputFilePath" name="inputFilePath">
             </div>
             <button type="submit" class="btn btn-primary">Fortfahren</button>
         </form>
-        <hr/>
-        <a th:href="@{/searchOption}">Fortfahren.</a>
     </div>
 </body>
 </html>
