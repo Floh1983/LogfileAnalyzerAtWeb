@@ -9,8 +9,6 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <script>
-        <!-- Unmöglich, das für meine Bedürfnisse anzupassen? -->
-        <!-- Umändern in eine Dateiauswahl? -->
         function getFilePath() {
             var fileInput = document.getElementById('file');
             var filePath = fileInput.value;
@@ -22,7 +20,7 @@
 <div class='container'>
     <h2>Bitte wählen Sie aus wo die Datei gespeichert werden soll.</h2>
     <hr/>
-    <a th:href="/search/file/${filename}" download>
+    <a <!--th:href="/search/file/${resultFilename}" download-->>
         <button type="" class="btn btn-primary">Download</button>
     </a>
 </div>

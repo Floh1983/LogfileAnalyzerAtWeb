@@ -1,6 +1,6 @@
 package org.fs.logfileanalyzeratweb.Entity;
 
-import org.fs.logfileanalyzeratweb.Controller.FController;
+//import org.fs.logfileanalyzeratweb.Controller.FController;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

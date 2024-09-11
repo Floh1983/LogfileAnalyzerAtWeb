@@ -12,5 +12,6 @@ public class SearchModel {
 
     private MultipartFile file;
     private String search;
+    private String resultFilename;
 
 }
