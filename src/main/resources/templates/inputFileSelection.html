@@ -20,10 +20,10 @@
 <div class='container'>
     <h2>Bitte wählen sie eine Datei aus.</h2>
     <hr/>
-    <form method="POST" action="/inputFile" enctype="multipart/form-data">
+    <form method="POST" action="/inputFile" enctype="multipart/form-data" >
         <div class="form-group">
             <label for="file">Wählen Sie eine Datei:</label>
-            <input type="file" class="form-control" id="fileInput" name="file" onchange="getFilePath()" required>
+            <input type="file" class="form-control" id="file" name="file" onchange="getFilePath()" required>
         </div>
         <button type="submit" class="btn btn-primary">Fortfahren</button>
     </form>

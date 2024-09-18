@@ -13,12 +13,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Controller("/search")
 public class SearchController {
 
+
     private final Textsearch textsearch;
     private final StorageService storageService;
+
 
     @Autowired
     public SearchController(Textsearch textsearch, StorageService storageService) {
@@ -40,7 +43,7 @@ public class SearchController {
 
 
 //    @PostMapping("/inputFile")
-//    public String inputFile(@RequestBody @NotNull SearchModel searchModel ) throws IOException {
+//    public String search(@RequestBody @NotNull SearchModel searchModel ) throws IOException {
 //        //Auswählen der Datei
 //        String resultFilename = "result-"+searchModel.getFile().getOriginalFilename();
 //        //Speichern der Datei
@@ -49,15 +52,24 @@ public class SearchController {
 //            file.createNewFile();
 //        }
 //        searchModel.setResultFilename(resultFilename);
-//        return "redirect:/searchOption";
-    //    return search;
+//  //      return "redirect:/searchOption";
+//      return search(searchModel);
 //    }
 
     @PostMapping("/inputFile")
-    public String inputFile(@RequestParam("file") MultipartFile file) {
-        // Handle the file upload
+    public String search(@RequestBody @NotNull MultipartFile file ) throws IOException {
+
+        File newfile = storageService.createFile(file.getOriginalFilename());
+        SearchModel searchModel=new SearchModel();
+        searchModel.setFile(file);
         return "redirect:/searchOption";
     }
+
+//    @PostMapping("/inputFile")
+//    public String inputFile(@RequestParam("file") MultipartFile file) {
+//        // Handle the file upload
+//        return "redirect:/searchOption";
+//    }
 
     @GetMapping("/searchOption")
     public ModelAndView showText(){
@@ -68,15 +80,47 @@ public class SearchController {
     }
 
     @GetMapping("/textSearch")
-   public ModelAndView textSearch(){
+    public ModelAndView textSearch(){
        ModelAndView mav = new ModelAndView("textSearch");
        return mav;
    }
 
+    @GetMapping("/dateSearch")
+    public ModelAndView dateSearch(){
+        ModelAndView mav = new ModelAndView("dateSearch");
+        return mav;
+    }
+
+    @GetMapping("/docIDSearch")
+    public ModelAndView docIDSearch(){
+        ModelAndView mav = new ModelAndView("docIDSearch");
+        return mav;
+    }
+
+    @GetMapping("/iPSearch")
+    public ModelAndView iPSearch(){
+        ModelAndView mav = new ModelAndView("iPSearch");
+        return mav;
+    }
+
+    @GetMapping("/sapDocIDSearch")
+    public ModelAndView sapDocIDSearch(){
+        ModelAndView mav = new ModelAndView("sapDocIDSearch");
+        return mav;
+    }
+
+    @GetMapping("/timeSearch")
+    public ModelAndView timeSearch(){
+        ModelAndView mav = new ModelAndView("timeSearch");
+        return mav;
+    }
+
 
 //    @PostMapping("/search")
 //    public String performSearch(@RequestBody SearchModel searchModel) throws IOException {
-//        // Textsearch aufrufen
+//
+//
+// Textsearch aufrufen
 //        textsearch.textsearch(searchModel.getFile(), "ante", storageService.load(searchModel.getResultFilename()).toFile());
 //        search.addObject("filename", searchModel.getResultFilename());
 //        return "redirect://file/{resultFilename}";
@@ -87,15 +131,15 @@ public class SearchController {
         return "redirect:/downloadSearch";
     }
 
+    @GetMapping("/file/{resultFilename}")
+    public Resource getDownloadFile(@PathVariable String resultFilename) {
+        return storageService.loadAsResource(resultFilename);
+    }
+
     @GetMapping("/downloadSearch")
     public ModelAndView downloadSearch(){
         ModelAndView mav = new ModelAndView("downloadSearch");
         return mav;
-    }
-
-    @GetMapping("/file/{resultFilename}")
-    public Resource getDownloadFile(@PathVariable String resultFilename) {
-        return storageService.loadAsResource(resultFilename);
     }
 
 

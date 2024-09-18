@@ -1,17 +1,5 @@
 package org.fs.logfileanalyzeratweb.Controller;
 
-import ch.qos.logback.core.model.Model;
-import org.fs.logfileanalyzeratweb.Entity.Textsearch;
-import org.fs.logfileanalyzeratweb.Provider.InputFileProvider;
-import org.fs.logfileanalyzeratweb.Provider.OutputFolderProvider;
-import org.fs.logfileanalyzeratweb.Provider.SearchTextProvider;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.io.IOException;
-
 //@Controller
 
 //public class FController {
