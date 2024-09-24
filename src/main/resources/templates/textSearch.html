@@ -13,7 +13,7 @@
 <div class='container'>
     <h2>Nach welchem Text soll gesucht werden?</h2>
     <hr/>
-    <form th:action="@{/search}" method="post">
+    <form th:action="@{/performSearch}" method="post">
         <label for="searchText">Suchtext:</label>
         <input type="text" id="searchText" placeholder="Hier Suchtext eingeben" class="form-control col-4 mb-4" />
         <button class="btn btn-primary" type="submit">Suche starten</button>

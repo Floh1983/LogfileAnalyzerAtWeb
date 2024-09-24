@@ -1,5 +1,6 @@
 package org.fs.logfileanalyzeratweb.Controller;
 
+import lombok.Data;
 import org.fs.logfileanalyzeratweb.Entity.SearchModel;
 import org.fs.logfileanalyzeratweb.Entity.Textsearch;
 import org.fs.logfileanalyzeratweb.service.StorageService;
@@ -7,25 +8,25 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicLong;
 
-@Controller("/search")
+@Data
+@Controller
 public class SearchController {
 
 
-    private final Textsearch textsearch;
     private final StorageService storageService;
 
 
     @Autowired
-    public SearchController(Textsearch textsearch, StorageService storageService) {
-        this.textsearch = textsearch;
+    public SearchController(StorageService storageService) {
+
         this.storageService = storageService;
     }
 
@@ -35,12 +36,33 @@ public class SearchController {
         return mav;
     }
 
+//    @GetMapping("/searchOption")
+//    public ModelAndView showText(){
+//        ModelAndView mav = new ModelAndView("searchOption");
+//               SearchModel searchModel = new SearchModel();
+//               mav.addObject(searchOption(), searchModel);
+//        return mav;
+//    }
+
+    @GetMapping("/searchOption")
+    public ModelAndView searchOption(Model model) {
+        ModelAndView mav = new ModelAndView("searchOption");
+        model.addAttribute("searchModel", new SearchModel());
+        return mav;
+    }
+
+    @PostMapping("/searchOption")
+    public String searchOption(@ModelAttribute SearchModel searchModel, Model model) {
+        // Hier wird der Wert von searchModel.getSearchOption() verwendet
+        model.addAttribute("searchOption", searchModel.getSearchOption());
+        return "redirect:/inputFileSelection";
+    }
+
     @GetMapping("/inputFileSelection")
     public ModelAndView inputFileSelection(){
         ModelAndView mav = new ModelAndView("inputFileSelection");
         return mav;
     }
-
 
 //    @PostMapping("/inputFile")
 //    public String search(@RequestBody @NotNull SearchModel searchModel ) throws IOException {
@@ -57,31 +79,24 @@ public class SearchController {
 //    }
 
     @PostMapping("/inputFile")
-    public String search(@RequestBody @NotNull MultipartFile file ) throws IOException {
+    public String inputFile(@RequestBody @NotNull MultipartFile inputFile ) throws IOException {
 
-        File newfile = storageService.createFile(file.getOriginalFilename());
+        File newfile = storageService.createFile(inputFile.getOriginalFilename());
         SearchModel searchModel=new SearchModel();
-        searchModel.setFile(file);
-        return "redirect:/searchOption";
+        searchModel.setInputFile(inputFile);
+        return "redirect:/textSearch";
     }
-
 //    @PostMapping("/inputFile")
 //    public String inputFile(@RequestParam("file") MultipartFile file) {
 //        // Handle the file upload
 //        return "redirect:/searchOption";
+
 //    }
 
-    @GetMapping("/searchOption")
-    public ModelAndView showText(){
-        ModelAndView mav = new ModelAndView("searchOption");
-        Textsearch mytext = new Textsearch();
-        mav.addObject("textsearch", mytext);
-        return mav;
-    }
-
     @GetMapping("/textSearch")
-    public ModelAndView textSearch(){
+    public ModelAndView textSearch(String searchValue) throws IOException{
        ModelAndView mav = new ModelAndView("textSearch");
+       mav.addObject("textsearch", searchValue);
        return mav;
    }
 
@@ -126,8 +141,10 @@ public class SearchController {
 //        return "redirect://file/{resultFilename}";
 //    }
 
-    @PostMapping("/search")
+    @PostMapping("/performSearch")
     public String performSearch(){
+        //Suchmethode aufrufen
+        //InputFile und searchValue hier übergeben.
         return "redirect:/downloadSearch";
     }
 

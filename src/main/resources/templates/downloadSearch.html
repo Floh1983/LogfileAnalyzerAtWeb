@@ -10,7 +10,7 @@
           crossorigin="anonymous">
     <script>
         function getFilePath() {
-            var fileInput = document.getElementById('file');
+            var fileInput = document.getElementById('resultFilename');
             var filePath = fileInput.value;
             document.getElementById('outputFolderPath').value = filePath;
         }
@@ -18,9 +18,9 @@
 </head>
 <body>
 <div class='container'>
-    <h2>Bitte wählen Sie aus wo die Datei gespeichert werden soll.</h2>
+    <h2>Sie können das Ergebnis nun Downloaden</h2>
     <hr/>
-    <a <!--th:href="/search/file/${resultFilename}" -->>
+    <a th:href="/search/file/${resultFilename}">
         <button type="" class="btn btn-primary">Download</button>
     </a>
 </div>

@@ -13,12 +13,33 @@
 <div class="container">
     <h2>Bitte wählen sie eine Suchoption aus.</h2>
     <hr/>
-    <a th:href="@{/textSearch}" class="btn btn-primary mb-2">Volltextsuche</a>
-    <a th:href="@{/DateSearch}" class="btn btn-primary mb-2">Datumssuche</a>
-    <a th:href="@{/DocIDSearch}" class="btn btn-primary mb-2">DocID Suche</a>
-    <a th:href="@{/iPSearch}" class="btn btn-primary mb-2">IP Suche</a>
-    <a th:href="@{/sapDocIDSearch}" class="btn btn-primary mb-2">SAP DocID Suche</a>
-    <a th:href="@{/timeSearch}" class="btn btn-primary mb-2">Suche nach Zeitspanne</a>
+    <form th:action="@{/searchOption}" th:object="${searchModel}" method="post">
+        <label>
+            <input type="hidden" th:field="*{searchOption}" value="Textsearch" />
+            <button type="submit" class="btn btn-primary mb-2">Volltextsuche</button>
+        </label>
+        <label>
+            <input type="hidden" th:field="*{searchOption}" value="DateSearch" />
+            <button type="submit" class="btn btn-primary mb-2">Suche nach Datum</button>
+        </label>
+        <label>
+            <input type="hidden" th:field="*{searchOption}" value="DocIDSearch" />
+            <button type="submit" class="btn btn-primary mb-2">DocID Suche</button>
+        </label>
+        <label>
+            <input type="hidden" th:field="*{searchOption}" value="iPSearch" />
+            <button type="submit" class="btn btn-primary mb-2">IP Suche</button>
+        </label>
+        <label>
+            <input type="hidden" th:field="*{searchOption}" value="sapDocIDSearch" />
+            <button type="submit" class="btn btn-primary mb-2">SAP-DocID Suche</button>
+        </label>
+        <label>
+            <input type="hidden" th:field="*{searchOption}" value="timeSearch" />
+            <button type="submit" class="btn btn-primary mb-2">Suche nach Zeitraum</button>
+        </label>
+    </form>
 </div>
 </body>
 </html>
+

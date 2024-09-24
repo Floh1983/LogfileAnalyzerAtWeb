@@ -44,9 +44,9 @@ public class Textsearch {
 //        Files.write(Paths.get(outputFile), matchingLines);
 //    }
 
-    public void textsearch(MultipartFile inputFile, @NotNull String searchText, File outputFile) throws IOException {
+    public void textsearch(MultipartFile inputFile, @NotNull String searchValue, File resultFilename) throws IOException {
         //Suchtext zu Kleinschreibung
-        String lowerCase = searchText.toLowerCase();
+        String lowerCase = searchValue.toLowerCase();
         //Suche durch Regex einschränken
         if (!lowerCase.matches("[0-9a-z-]{1,70}")) {
             throw new IllegalArgumentException("Suchtext enthält ungültige Zeichen.");
@@ -62,7 +62,7 @@ public class Textsearch {
                 //Bauen der Liste
                 .collect(Collectors.toList());
         //Ausgeben der Liste als .txt
-        Files.write(Path.of(outputFile.toURI()), matchingLines);
+        Files.write(Path.of(resultFilename.toURI()), matchingLines);
     }
 }
 
