@@ -19,5 +19,4 @@ public class SearchModel {
     private MultipartFile inputFile;
     private String searchValue;
     private String resultFilename;
-
 }

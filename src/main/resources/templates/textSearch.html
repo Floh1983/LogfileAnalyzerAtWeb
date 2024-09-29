@@ -13,10 +13,13 @@
 <div class='container'>
     <h2>Nach welchem Text soll gesucht werden?</h2>
     <hr/>
-    <form th:action="@{/performSearch}" method="post">
-        <label for="searchText">Suchtext:</label>
-        <input type="text" id="searchText" placeholder="Hier Suchtext eingeben" class="form-control col-4 mb-4" />
-        <button class="btn btn-primary" type="submit">Suche starten</button>
+    <form method="post" action="/textSearcher">
+        <div class="form-group">
+            <label for="searchValue">Suchtext:</label>
+            <!--<input type="text" id="searchValue" placeholder="Hier Suchtext eingeben" class="form-control col-4 mb-4" />-->
+            <input type="text" id="searchValue" name="searchValue" value="ante" />
+        </div>
+            <button class="btn btn-primary" type="submit">Suche starten</button>
     </form>
 </div>
 </body>
