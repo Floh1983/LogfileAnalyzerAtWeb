@@ -15,9 +15,5 @@ public class LogfileAnalyzerAtWebApplication {
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(LogfileAnalyzerAtWebApplication.class, args);
-//		Textsearch mytext = new Textsearch();
-//		mytext.textsearch("C:\\Users\\u1166832\\Documents\\Praktikum\\IHK\\Projekt\\Test.txt",
-//				"ante",
-//				"C:\\Users\\u1166832\\Documents\\Praktikum\\IHK\\Projekt\\TestAusgabe.txt");
 	}
 }

@@ -27,7 +27,7 @@ public class StorageService {
         this.rootLocation = Paths.get(properties.getLocation());
     }
 
-    
+
     public void store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
@@ -39,7 +39,7 @@ public class StorageService {
         }
     }
 
-    
+
     public Stream<Path> loadAll() {
         try {
             return Files.walk(this.rootLocation, 1)
@@ -54,12 +54,12 @@ public class StorageService {
     public File createFile(String filename) {
         return new File(rootLocation.toFile().getAbsolutePath(), filename);
     }
-    
+
     public Path load(String filename) {
         return rootLocation.resolve(filename);
     }
 
-    
+
     public Resource loadAsResource(String filename) {
         try {
             Path file = load(filename);
@@ -76,12 +76,12 @@ public class StorageService {
         }
     }
 
-    
+
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
 
-    
+
     public void init() {
         try {
             Files.createDirectory(rootLocation);

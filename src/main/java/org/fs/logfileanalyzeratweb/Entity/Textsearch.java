@@ -1,6 +1,5 @@
 package org.fs.logfileanalyzeratweb.Entity;
 
-//import org.fs.logfileanalyzeratweb.Controller.FController;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,7 +43,7 @@ public class Textsearch {
 //        Files.write(Paths.get(outputFile), matchingLines);
 //    }
 
-    public void textsearch(MultipartFile inputFile, @NotNull String searchValue, File resultFilename) throws IOException {
+    public static void textsearch(File inputFile, @NotNull String searchValue, File resultFile) throws IOException {
         //Suchtext zu Kleinschreibung
         String lowerCase = searchValue.toLowerCase();
         //Suche durch Regex einschränken
@@ -54,7 +53,7 @@ public class Textsearch {
         Pattern pattern = Pattern.compile(Pattern.quote(lowerCase));
         //Lesen der .txt
 
-        String content = new String(inputFile.getBytes(), StandardCharsets.UTF_8);
+        String content = new String(Files.readAllBytes(inputFile.toPath()), StandardCharsets.UTF_8);
 
         List<String> matchingLines = Arrays.stream(content.split("\n"))
                 //Filtern
@@ -62,7 +61,7 @@ public class Textsearch {
                 //Bauen der Liste
                 .collect(Collectors.toList());
         //Ausgeben der Liste als .txt
-        Files.write(Path.of(resultFilename.toURI()), matchingLines);
+        Files.write(Path.of(resultFile.toURI()), matchingLines);
     }
 }
 

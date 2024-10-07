@@ -1,7 +1,6 @@
 package org.fs.logfileanalyzeratweb.Controller;
 
 import lombok.Data;
-import org.fs.logfileanalyzeratweb.Entity.SearchModel;
 import org.fs.logfileanalyzeratweb.Entity.Textsearch;
 import org.fs.logfileanalyzeratweb.service.StorageService;
 import org.jetbrains.annotations.NotNull;
@@ -21,12 +20,14 @@ public class SearchController {
 
 
     private final StorageService storageService;
+    private final Textsearch textsearch;
 
 
     @Autowired
-    public SearchController(StorageService storageService) {
+    public SearchController(StorageService storageService, Textsearch textsearch) {
 
         this.storageService = storageService;
+        this.textsearch = textsearch;
     }
 
     @GetMapping("/startpage")
@@ -56,8 +57,8 @@ public class SearchController {
 //      return search(searchModel);
 //    }
     @PostMapping("/inputFile")
-    public String inputFile(@RequestBody @NotNull MultipartFile inputFile ) throws IOException {
-        File newfile = storageService.createFile(inputFile.getOriginalFilename());
+    public String inputFile(@RequestParam @NotNull MultipartFile inputFile ) throws IOException {
+        File newfile = storageService.createFile("inputFile.txt");
         //write to file: pfad und dateinamen übergeben
         OutputStream os = new FileOutputStream(newfile);
         os.write(inputFile.getBytes());
@@ -77,18 +78,29 @@ public class SearchController {
     }
 
      @PostMapping("/textSearcher")
-        public String textSearcher(@RequestBody @NotNull String searchValue) throws IOException {
-       //write to file: searchValue
-         File newSearchValue = storageService.createFile(searchValue);
-         BufferedWriter bw = new BufferedWriter(new FileWriter(newSearchValue));
-         bw.write(searchValue);
-         System.out.println(newSearchValue);
-       //suchmethode aufrufen
-//        textsearch.textsearch(searchModel.getFile(), "ante", storageService.load(searchModel.getResultFilename()).toFile());
-//        search.addObject("filename", searchModel.getResultFilename());
-//        return "redirect://file/{resultFilename}";
-        //write to file: ergebniss
-       return "redirect:/file/{resultFilename}";
+        public String textSearcher(@RequestParam @NotNull String searchValue) throws IOException {
+         if (searchValue.startsWith("searchValue=")) {
+             searchValue = searchValue.substring("searchValue=".length());
+             System.out.println("eins");
+         }
+        String directoryPath = "C:/Users/u1166832/IdeaProjects/LogfileAnalyzerAtWeb/file";
+        //write to file: searchValue
+         File newSearchValue = new File(directoryPath, "searchValue.txt");
+         OutputStream os = new FileOutputStream(newSearchValue);
+         os.write(searchValue.getBytes());
+         System.out.println("zwei");
+         // Ergebnisdatei definieren
+         File resultFile = new File(directoryPath, "result.txt");
+         System.out.println("drei");
+//         // Datei vom Pfad laden
+//         MultipartFile inputFile = (MultipartFile) new File(directoryPath);
+
+         File inputFile = new File(directoryPath);
+         FileInputStream input = new FileInputStream(inputFile);
+         // Aufruf der textsearch Methode
+         Textsearch.textsearch(inputFile, searchValue, resultFile);
+         System.out.println("vier");
+         return "redirect:/dummy";
      }
 
     @GetMapping("/dateSearch")
@@ -149,4 +161,12 @@ public class SearchController {
         ModelAndView mav = new ModelAndView("downloadSearch");
         return mav;
     }
+
+    @GetMapping("/dummy")
+    public ModelAndView dummy(){
+        ModelAndView mav = new ModelAndView("dummy");
+        return mav;
+    }
 }
+
+

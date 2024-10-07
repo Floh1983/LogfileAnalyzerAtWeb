@@ -2,7 +2,7 @@
 <html xmlns="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dateiauswahl</title>
+    <title>Ordnerauswahl</title>
     <link  href="https://cdn.datatables.net/v/bs4/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -11,16 +11,11 @@
 </head>
 <body>
 <div class='container'>
-    <h2>Nach welchem Text soll gesucht werden?</h2>
+    <h2>Sie können das Ergebnis nun Downloaden</h2>
     <hr/>
-    <form method="post" action="/textSearcher">
-        <div class="form-group">
-            <label for="searchValue">Suchtext:</label>
-            <!--<input type="text" id="searchValue" placeholder="Hier Suchtext eingeben" class="form-control col-4 mb-4" />-->
-            <input type="text" name="searchValue" />
-        </div>
-        <button class="btn btn-primary" type="submit">Suche starten</button>
-    </form>
+    <a>
+        <button type="" class="btn btn-primary">Download</button>
+    </a>
 </div>
 </body>
 </html>
