@@ -22,10 +22,11 @@ public class DateSearch {
             throw new IllegalArgumentException("Suchtext enthält ungültige Zeichen.");
         }
         Pattern pattern = Pattern.compile(Pattern.quote(lowerCase));
-        //Lesen der .txt
 
+        //Lesen der .txt
         String content = new String(Files.readAllBytes(inputFile.toPath()), StandardCharsets.UTF_8);
 
+        //Splitten der Inhalte der .txt bei jedem Zeilenumbruch
         List<String> matchingLines = Arrays.stream(content.split("\n"))
                 //Filtern
                 .filter(line -> pattern.matcher(line.toLowerCase()).find())
