@@ -21,12 +21,13 @@ import java.util.stream.Collectors;
 public class Textsearch {
 
     public static void textsearch(File inputFile, @NotNull String searchValue, File resultFile) throws IOException {
-        //Suchtext zu Kleinschreibung
+        //Suchwert zu Kleinschreibung
         String lowerCase = searchValue.toLowerCase();
         //Suche durch Regex einschränken
         if (!lowerCase.matches("[0-9a-z-]{1,70}")) {
             throw new IllegalArgumentException("Suchtext enthält ungültige Zeichen.");
         }
+        //Suchtext zu Kleinschreibung
         Pattern pattern = Pattern.compile(Pattern.quote(lowerCase));
 
         //Lesen der .txt

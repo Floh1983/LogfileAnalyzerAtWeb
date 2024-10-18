@@ -15,12 +15,13 @@ import java.util.stream.Collectors;
 public class IPSearch {
 
     public static void iPSearch(File inputFile, @NotNull String searchValue, File resultFile) throws IOException {
-        //Suchtext zu Kleinschreibung
+        //Suchwert zu Kleinschreibung
         String lowerCase = searchValue.toLowerCase();
         //Suche durch Regex einschränken
-        if (!lowerCase.matches("[0-9a-z-]{1,70}")) {
+        if (!lowerCase.matches("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
             throw new IllegalArgumentException("Suchtext enthält ungültige Zeichen.");
         }
+        //Suchtext zu Kleinschreibung
         Pattern pattern = Pattern.compile(Pattern.quote(lowerCase));
 
         //Lesen der .txt

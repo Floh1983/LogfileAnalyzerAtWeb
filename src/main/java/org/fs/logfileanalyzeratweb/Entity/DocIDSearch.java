@@ -15,12 +15,13 @@ import java.util.stream.Collectors;
 public class DocIDSearch {
 
     public static void docIDSearch(File inputFile, @NotNull String searchValue, File resultFile) throws IOException {
-        //Suchtext zu Kleinschreibung
+        //Suchwert zu Kleinschreibung
         String lowerCase = searchValue.toLowerCase();
         //Suche durch Regex einschränken
-        if (!lowerCase.matches("[0-9a-z-]{1,70}")) {
+        if (!lowerCase.matches("[0-9A-Za-z-+]*")) {
             throw new IllegalArgumentException("Suchtext enthält ungültige Zeichen.");
         }
+        //Suchtext zu Kleinschreibung
         Pattern pattern = Pattern.compile(Pattern.quote(lowerCase));
 
         //Lesen der .txt

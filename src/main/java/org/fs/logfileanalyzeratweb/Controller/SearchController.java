@@ -100,7 +100,7 @@ public class SearchController {
          // Aufruf der textsearch Methode
          Textsearch.textsearch(inputFile, searchValue, resultFile);
          System.out.println("vier");
-         return "redirect:/dummy";
+         return "redirect:/file/{resultFilename}";
      }
 
     @GetMapping("/dateSearch")
@@ -133,24 +133,6 @@ public class SearchController {
         return mav;
     }
 
-
-//    @PostMapping("/search")
-//    public String performSearch(@RequestBody SearchModel searchModel) throws IOException {
-//
-//
-// Textsearch aufrufen
-//        textsearch.textsearch(searchModel.getFile(), "ante", storageService.load(searchModel.getResultFilename()).toFile());
-//        search.addObject("filename", searchModel.getResultFilename());
-//        return "redirect://file/{resultFilename}";
-//    }
-
-//    @PostMapping("/performSearch")
-//    public String performSearch(){
-//        //Suchmethode aufrufen
-//        //InputFile und searchValue hier übergeben.
-//        return "redirect:/downloadSearch";
-//    }
-
     @GetMapping("/file/{resultFilename}")
     public Resource getDownloadFile(@PathVariable String resultFilename) {
         return storageService.loadAsResource(resultFilename);
@@ -159,12 +141,6 @@ public class SearchController {
     @GetMapping("/downloadSearch")
     public ModelAndView downloadSearch(){
         ModelAndView mav = new ModelAndView("downloadSearch");
-        return mav;
-    }
-
-    @GetMapping("/dummy")
-    public ModelAndView dummy(){
-        ModelAndView mav = new ModelAndView("dummy");
         return mav;
     }
 }

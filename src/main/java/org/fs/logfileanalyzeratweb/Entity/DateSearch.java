@@ -15,12 +15,15 @@ import java.util.stream.Collectors;
 public class DateSearch {
 
     public static void dateSearch(File inputFile, @NotNull String searchValue, File resultFile) throws IOException {
-        //Suchtext zu Kleinschreibung
+        //Suchwert zu Kleinschreibung
         String lowerCase = searchValue.toLowerCase();
         //Suche durch Regex einschränken
-        if (!lowerCase.matches("[0-9a-z-]{1,70}")) {
+        if (!lowerCase.matches("[0-2][0-9]{3}\\\\/(0[0-9]|1[0-2])\\\\/([0-2][0-9]|3[01])\" \n" +
+                "+\"(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])-\" \n" +
+                "+\"(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])\")) {
             throw new IllegalArgumentException("Suchtext enthält ungültige Zeichen.");
         }
+        //Suchtext zu Kleinschreibung
         Pattern pattern = Pattern.compile(Pattern.quote(lowerCase));
 
         //Lesen der .txt

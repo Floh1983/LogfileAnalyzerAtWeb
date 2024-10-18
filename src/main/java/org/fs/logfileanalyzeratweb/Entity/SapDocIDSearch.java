@@ -15,12 +15,13 @@ import java.util.stream.Collectors;
 public class SapDocIDSearch {
 
     public static void sapDocIDSearch(File inputFile, @NotNull String searchValue, File resultFile) throws IOException {
-        //Suchtext zu Kleinschreibung
+        //Suchwert zu Kleinschreibung
         String lowerCase = searchValue.toLowerCase();
         //Suche durch Regex einschränken
-        if (!lowerCase.matches("[0-9a-z-]{1,70}")) {
+        if (!lowerCase.matches("999[0-9A-Za-z]{3}999_[0-9A-Za-z]{2}_[0-9A-Za-z-_]*")) {
             throw new IllegalArgumentException("Suchtext enthält ungültige Zeichen.");
         }
+        //Suchtext zu Kleinschreibung
         Pattern pattern = Pattern.compile(Pattern.quote(lowerCase));
 
         //Lesen der .txt
