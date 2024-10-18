@@ -1,7 +1,7 @@
 package org.fs.logfileanalyzeratweb.Controller;
 
 import lombok.Data;
-import org.fs.logfileanalyzeratweb.Entity.Textsearch;
+import org.fs.logfileanalyzeratweb.Entity.*;
 import org.fs.logfileanalyzeratweb.service.StorageService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,12 @@ public class SearchController {
 
 
     private final StorageService storageService;
+    private final DateSearch dateSearch;
+    private final DocIDSearch docIDSearch;
+    private final IPSearch iPSearch;
+    private final SapDocIDSearch sapDocIDSearch;
     private final Textsearch textsearch;
-
+    private final TimeSearch timeSearch;
 
     @Autowired
     public SearchController(StorageService storageService, Textsearch textsearch) {
@@ -42,20 +46,6 @@ public class SearchController {
         return mav;
     }
 
-
-//    @PostMapping("/inputFile")
-//    public String search(@RequestBody @NotNull SearchModel searchModel ) throws IOException {
-//        //Auswählen der Datei
-//        String resultFilename = "result-"+searchModel.getFile().getOriginalFilename();
-//        //Speichern der Datei
-//        File file = storageService.createFile(resultFilename);
-//        if (!file.exists()) {
-//            file.createNewFile();
-//        }
-//        searchModel.setResultFilename(resultFilename);
-//  //      return "redirect:/searchOption";
-//      return search(searchModel);
-//    }
     @PostMapping("/inputFile")
     public String inputFile(@RequestParam @NotNull MultipartFile inputFile ) throws IOException {
         File newfile = storageService.createFile("inputFile.txt");
@@ -79,27 +69,23 @@ public class SearchController {
 
      @PostMapping("/textSearcher")
         public String textSearcher(@RequestParam @NotNull String searchValue) throws IOException {
+        //Trimmen des Übergabewertes
          if (searchValue.startsWith("searchValue=")) {
              searchValue = searchValue.substring("searchValue=".length());
-             System.out.println("eins");
          }
+         //Pfad festlegen
         String directoryPath = "C:/Users/u1166832/IdeaProjects/LogfileAnalyzerAtWeb/file";
-        //write to file: searchValue
+        //Suchwert zu Datei schreiben
          File newSearchValue = new File(directoryPath, "searchValue.txt");
          OutputStream os = new FileOutputStream(newSearchValue);
          os.write(searchValue.getBytes());
-         System.out.println("zwei");
          // Ergebnisdatei definieren
          File resultFile = new File(directoryPath, "result.txt");
-         System.out.println("drei");
-//         // Datei vom Pfad laden
-//         MultipartFile inputFile = (MultipartFile) new File(directoryPath);
-
+         // Datei vom Pfad laden
          File inputFile = new File(directoryPath);
          FileInputStream input = new FileInputStream(inputFile);
          // Aufruf der textsearch Methode
          Textsearch.textsearch(inputFile, searchValue, resultFile);
-         System.out.println("vier");
          return "redirect:/file/{resultFilename}";
      }
 
