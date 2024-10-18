@@ -113,7 +113,7 @@ public class SearchController {
                  Textsearch.textsearch(inputFile, searchValue, resultFile);
              }
          }
-         return "redirect:/downloadSearch";;
+         return "redirect:/downloadSearch";
      }
 
     @GetMapping("/dateSearch")
@@ -146,10 +146,10 @@ public class SearchController {
                 File inputFile = Paths.get(destDir, path.toString()).toFile();
                 FileInputStream input = new FileInputStream(inputFile);
                 // Aufruf der datesearch Methode
-                Datesearch.datesearch(inputFile, searchValue, resultFile);
+                DateSearch.dateSearch(inputFile, searchValue, resultFile);
             }
         }
-        return "redirect:/downloadSearch";;
+        return "redirect:/downloadSearch";
     }
 
     @GetMapping("/docIDSearch")
@@ -158,10 +158,70 @@ public class SearchController {
         return mav;
     }
 
+    @PostMapping("/docIDSearcher")
+    public String docIDSearcher(@RequestParam @NotNull String searchValue) throws IOException {
+        //Trimmen des Übergabewertes
+        if (searchValue.startsWith("searchValue=")) {
+            searchValue = searchValue.substring("searchValue=".length());
+        }
+        //Pfad festlegen
+        String directoryPath = "temp";
+        //Suchwert zu Datei schreiben
+        File newSearchValue = new File(directoryPath, "searchValue.txt");
+        OutputStream os = new FileOutputStream(newSearchValue);
+        os.write(searchValue.getBytes());
+        // Ergebnisdatei definieren
+        File resultFile = new File(directoryPath, "result.txt");
+        // Datei vom Pfad laden
+        String destDir = "temp/extracted";
+        Stream<Path> paths = storageService.loadAll(Paths.get(destDir), Integer.MAX_VALUE);
+        for (Path path : paths.toArray(Path[]::new))
+        {
+            if (path.toString().endsWith(".txt"))
+            {
+                File inputFile = Paths.get(destDir, path.toString()).toFile();
+                FileInputStream input = new FileInputStream(inputFile);
+                // Aufruf der datesearch Methode
+                DocIDSearch.docIDSearch(inputFile, searchValue, resultFile);
+            }
+        }
+        return "redirect:/downloadSearch";
+    }
+
     @GetMapping("/iPSearch")
     public ModelAndView iPSearch(){
         ModelAndView mav = new ModelAndView("iPSearch");
         return mav;
+    }
+
+    @PostMapping("/iPSearcher")
+    public String iPSearcher(@RequestParam @NotNull String searchValue) throws IOException {
+        //Trimmen des Übergabewertes
+        if (searchValue.startsWith("searchValue=")) {
+            searchValue = searchValue.substring("searchValue=".length());
+        }
+        //Pfad festlegen
+        String directoryPath = "temp";
+        //Suchwert zu Datei schreiben
+        File newSearchValue = new File(directoryPath, "searchValue.txt");
+        OutputStream os = new FileOutputStream(newSearchValue);
+        os.write(searchValue.getBytes());
+        // Ergebnisdatei definieren
+        File resultFile = new File(directoryPath, "result.txt");
+        // Datei vom Pfad laden
+        String destDir = "temp/extracted";
+        Stream<Path> paths = storageService.loadAll(Paths.get(destDir), Integer.MAX_VALUE);
+        for (Path path : paths.toArray(Path[]::new))
+        {
+            if (path.toString().endsWith(".txt"))
+            {
+                File inputFile = Paths.get(destDir, path.toString()).toFile();
+                FileInputStream input = new FileInputStream(inputFile);
+                // Aufruf der datesearch Methode
+                IPSearch.iPSearch(inputFile, searchValue, resultFile);
+            }
+        }
+        return "redirect:/downloadSearch";
     }
 
     @GetMapping("/sapDocIDSearch")
@@ -170,10 +230,70 @@ public class SearchController {
         return mav;
     }
 
+    @PostMapping("/sapDocIDSearcher")
+    public String sapDocIDSearcher(@RequestParam @NotNull String searchValue) throws IOException {
+        //Trimmen des Übergabewertes
+        if (searchValue.startsWith("searchValue=")) {
+            searchValue = searchValue.substring("searchValue=".length());
+        }
+        //Pfad festlegen
+        String directoryPath = "temp";
+        //Suchwert zu Datei schreiben
+        File newSearchValue = new File(directoryPath, "searchValue.txt");
+        OutputStream os = new FileOutputStream(newSearchValue);
+        os.write(searchValue.getBytes());
+        // Ergebnisdatei definieren
+        File resultFile = new File(directoryPath, "result.txt");
+        // Datei vom Pfad laden
+        String destDir = "temp/extracted";
+        Stream<Path> paths = storageService.loadAll(Paths.get(destDir), Integer.MAX_VALUE);
+        for (Path path : paths.toArray(Path[]::new))
+        {
+            if (path.toString().endsWith(".txt"))
+            {
+                File inputFile = Paths.get(destDir, path.toString()).toFile();
+                FileInputStream input = new FileInputStream(inputFile);
+                // Aufruf der datesearch Methode
+                SapDocIDSearch.sapDocIDSearch(inputFile, searchValue, resultFile);
+            }
+        }
+        return "redirect:/downloadSearch";
+    }
+
     @GetMapping("/timeSearch")
     public ModelAndView timeSearch(){
         ModelAndView mav = new ModelAndView("timeSearch");
         return mav;
+    }
+
+    @PostMapping("/timeSearcher")
+    public String timeSearcher(@RequestParam @NotNull String searchValue) throws IOException {
+        //Trimmen des Übergabewertes
+        if (searchValue.startsWith("searchValue=")) {
+            searchValue = searchValue.substring("searchValue=".length());
+        }
+        //Pfad festlegen
+        String directoryPath = "temp";
+        //Suchwert zu Datei schreiben
+        File newSearchValue = new File(directoryPath, "searchValue.txt");
+        OutputStream os = new FileOutputStream(newSearchValue);
+        os.write(searchValue.getBytes());
+        // Ergebnisdatei definieren
+        File resultFile = new File(directoryPath, "result.txt");
+        // Datei vom Pfad laden
+        String destDir = "temp/extracted";
+        Stream<Path> paths = storageService.loadAll(Paths.get(destDir), Integer.MAX_VALUE);
+        for (Path path : paths.toArray(Path[]::new))
+        {
+            if (path.toString().endsWith(".txt"))
+            {
+                File inputFile = Paths.get(destDir, path.toString()).toFile();
+                FileInputStream input = new FileInputStream(inputFile);
+                // Aufruf der datesearch Methode
+                TimeSearch.timeSearch(inputFile, searchValue, resultFile);
+            }
+        }
+        return "redirect:/downloadSearch";
     }
 
     @GetMapping("/file/{resultFilename}")
