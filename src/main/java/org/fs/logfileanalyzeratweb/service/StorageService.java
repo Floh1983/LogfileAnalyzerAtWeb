@@ -51,6 +51,17 @@ public class StorageService {
 
     }
 
+    public Stream<Path> loadAll(Path location, Integer maxDepth) {
+        try {
+            return Files.walk(location, maxDepth)
+                    .filter(path -> !path.equals(location))
+                    .map(path -> location.relativize(path));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read stored files", e);
+        }
+
+    }
+
     public File createFile(String filename) {
         return new File(rootLocation.toFile().getAbsolutePath(), filename);
     }

@@ -2,16 +2,28 @@ package org.fs.logfileanalyzeratweb.Entity;
 
 import org.jetbrains.annotations.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+@Component
+@Data
 public class DateSearch {
 
     public static void dateSearch(File inputFile, @NotNull String searchValue, File resultFile) throws IOException {
@@ -20,7 +32,7 @@ public class DateSearch {
         //Suche durch Regex einschränken
         if (!lowerCase.matches("[0-2][0-9]{3}\\\\/(0[0-9]|1[0-2])\\\\/([0-2][0-9]|3[01])\" \n" +
                 "+\"(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])-\" \n" +
-                "+\"(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]")) {
+                "+\"(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])")) {
             throw new IllegalArgumentException("Suchtext enthält ungültige Zeichen.");
         }
         //Suchtext zu Kleinschreibung
@@ -36,6 +48,6 @@ public class DateSearch {
                 //Bauen der Liste
                 .collect(Collectors.toList());
         //Ausgeben der Liste als .txt
-        Files.write(Path.of(resultFile.toURI()), matchingLines);
+        Files.write(Path.of(resultFile.toURI()), matchingLines, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 }

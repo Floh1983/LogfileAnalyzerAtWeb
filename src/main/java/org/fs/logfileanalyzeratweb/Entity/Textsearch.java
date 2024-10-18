@@ -1,20 +1,24 @@
 package org.fs.logfileanalyzeratweb.Entity;
 
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
 
 @Component
 @Data
@@ -40,7 +44,7 @@ public class Textsearch {
                 //Bauen der Liste
                 .collect(Collectors.toList());
         //Ausgeben der Liste als .txt
-        Files.write(Path.of(resultFile.toURI()), matchingLines);
+        Files.write(Path.of(resultFile.toURI()), matchingLines, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 }
 

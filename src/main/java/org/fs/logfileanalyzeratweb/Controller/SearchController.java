@@ -11,8 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
+import net.lingala.zip4j.*;
+import net.lingala.zip4j.exception.*;
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 @Data
 @Controller
@@ -28,10 +32,16 @@ public class SearchController {
     private final TimeSearch timeSearch;
 
     @Autowired
-    public SearchController(StorageService storageService, Textsearch textsearch) {
+    public SearchController(StorageService storageService, DateSearch dateSearch, DocIDSearch docIDSearch,
+                            IPSearch iPSearch, SapDocIDSearch sapDocIDSearch, Textsearch textsearch, TimeSearch timeSearch) {
 
         this.storageService = storageService;
+        this.dateSearch = dateSearch;
+        this.docIDSearch = docIDSearch;
+        this.iPSearch = iPSearch;
+        this.sapDocIDSearch = sapDocIDSearch;
         this.textsearch = textsearch;
+        this.timeSearch = timeSearch;
     }
 
     @GetMapping("/startpage")
@@ -48,10 +58,19 @@ public class SearchController {
 
     @PostMapping("/inputFile")
     public String inputFile(@RequestParam @NotNull MultipartFile inputFile ) throws IOException {
-        File newfile = storageService.createFile("inputFile.txt");
+        File newfile = storageService.createFile("inputFile.zip");
         //write to file: pfad und dateinamen übergeben
         OutputStream os = new FileOutputStream(newfile);
         os.write(inputFile.getBytes());
+        os.close();
+
+        String destDir = "temp/extracted";
+        try {
+            ZipFile zipFile = new ZipFile(newfile);
+            zipFile.extractAll(destDir);
+        } catch (ZipException e) {
+            e.printStackTrace();
+        }
         return "redirect:/searchOption";
     }
 
@@ -74,7 +93,7 @@ public class SearchController {
              searchValue = searchValue.substring("searchValue=".length());
          }
          //Pfad festlegen
-        String directoryPath = "C:/Users/u1166832/IdeaProjects/LogfileAnalyzerAtWeb/file";
+        String directoryPath = "temp";
         //Suchwert zu Datei schreiben
          File newSearchValue = new File(directoryPath, "searchValue.txt");
          OutputStream os = new FileOutputStream(newSearchValue);
@@ -82,17 +101,55 @@ public class SearchController {
          // Ergebnisdatei definieren
          File resultFile = new File(directoryPath, "result.txt");
          // Datei vom Pfad laden
-         File inputFile = new File(directoryPath);
-         FileInputStream input = new FileInputStream(inputFile);
-         // Aufruf der textsearch Methode
-         Textsearch.textsearch(inputFile, searchValue, resultFile);
-         return "redirect:/file/{resultFilename}";
+         String destDir = "temp/extracted";
+         Stream<Path> paths = storageService.loadAll(Paths.get(destDir), Integer.MAX_VALUE);
+         for (Path path : paths.toArray(Path[]::new))
+         {
+             if (path.toString().endsWith(".txt"))
+             {
+                 File inputFile = Paths.get(destDir, path.toString()).toFile();
+                 FileInputStream input = new FileInputStream(inputFile);
+                 // Aufruf der textsearch Methode
+                 Textsearch.textsearch(inputFile, searchValue, resultFile);
+             }
+         }
+         return "redirect:/downloadSearch";;
      }
 
     @GetMapping("/dateSearch")
-    public ModelAndView dateSearch(){
+    public ModelAndView dateSearch(String searchValue) throws IOException{
         ModelAndView mav = new ModelAndView("dateSearch");
         return mav;
+    }
+
+    @PostMapping("/dateSearcher")
+    public String dateSearcher(@RequestParam @NotNull String searchValue) throws IOException {
+        //Trimmen des Übergabewertes
+        if (searchValue.startsWith("searchValue=")) {
+            searchValue = searchValue.substring("searchValue=".length());
+        }
+        //Pfad festlegen
+        String directoryPath = "temp";
+        //Suchwert zu Datei schreiben
+        File newSearchValue = new File(directoryPath, "searchValue.txt");
+        OutputStream os = new FileOutputStream(newSearchValue);
+        os.write(searchValue.getBytes());
+        // Ergebnisdatei definieren
+        File resultFile = new File(directoryPath, "result.txt");
+        // Datei vom Pfad laden
+        String destDir = "temp/extracted";
+        Stream<Path> paths = storageService.loadAll(Paths.get(destDir), Integer.MAX_VALUE);
+        for (Path path : paths.toArray(Path[]::new))
+        {
+            if (path.toString().endsWith(".txt"))
+            {
+                File inputFile = Paths.get(destDir, path.toString()).toFile();
+                FileInputStream input = new FileInputStream(inputFile);
+                // Aufruf der datesearch Methode
+                Datesearch.datesearch(inputFile, searchValue, resultFile);
+            }
+        }
+        return "redirect:/downloadSearch";;
     }
 
     @GetMapping("/docIDSearch")
